@@ -1,29 +1,30 @@
 import { WebPlugin } from "@capacitor/core";
-import { IOSAppTrackingPlugin } from "./definitions";
+import { IOSAppTrackingPlugin, AppTrackingAuthorizationStatus } from "./definitions";
 
-export class IOSAppTrackingWeb extends WebPlugin
-  implements IOSAppTrackingPlugin {
+export class IOSAppTrackingWeb extends WebPlugin implements IOSAppTrackingPlugin {
   constructor() {
     super({
       name: "IOSAppTracking",
-      platforms: ["web"],
+      platforms: ["web", "android"],
     });
   }
 
-  async getTrackingStatus({
-    value,
-  }: {
-    value: string;
-  }): Promise<{ value: string; status: string }> {
-    return { value: value, status: status };
+  async getTrackingAuthorizationStatus(): Promise<{ status: AppTrackingAuthorizationStatus }> {
+    return {
+      status: AppTrackingAuthorizationStatus.NotSupported,
+    };
   }
 
-  async requestPermission({
-    value,
-  }: {
-    value: string;
-  }): Promise<{ value: string; status: string }> {
-    return { value: value, status: status };
+  async getAdvertisingIdentifier(): Promise<{ identifier: string }> {
+    return {
+      identifier: "00000000-0000-0000-0000-000000000000",
+    };
+  }
+
+  async requestTrackingAuthorization(): Promise<{ status: AppTrackingAuthorizationStatus }> {
+    return {
+      status: AppTrackingAuthorizationStatus.NotSupported,
+    };
   }
 }
 
